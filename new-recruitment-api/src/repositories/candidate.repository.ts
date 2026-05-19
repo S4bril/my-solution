@@ -86,11 +86,11 @@ export class CandidateRepository {
     }));
   }
 
-  async markCandidateAsSynced(candidateIds: string[]): Promise<void> {
-    const placeholders = candidateIds.map(() => '?').join(', ');
+  async markCandidateAsSynced(candidateEmails: string[]): Promise<void> {
+    const placeholders = candidateEmails.map(() => '?').join(', ');
     await this.db.run(
       `UPDATE Candidate SET legacy_synced = 1 WHERE email IN (${placeholders})`,
-      candidateIds
+      candidateEmails
     );
   }
 }

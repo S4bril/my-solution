@@ -16,7 +16,7 @@ export class LegacySyncService {
       return;
     }
 
-    let syncedCandidateIds: string[] = [];
+    let syncedCandidateEmails: string[] = [];
 
     for (const candidate of candidatesToSync) {
       try {
@@ -29,17 +29,19 @@ export class LegacySyncService {
           body: JSON.stringify(candidate),
         });
         if (response.ok) {
-          syncedCandidateIds.push(candidate.email);
+          syncedCandidateEmails.push(candidate.email);
         }
       } catch (error) {
         console.error(`Failed to sync candidate ${candidate.email}:`, error);
       }
     }
 
-    if (syncedCandidateIds.length > 0) {
-      await this.candidateRepository.markCandidateAsSynced(syncedCandidateIds);
+    if (syncedCandidateEmails.length > 0) {
+      await this.candidateRepository.markCandidateAsSynced(
+        syncedCandidateEmails
+      );
       console.log(
-        `Successfully synced ${syncedCandidateIds.length} candidates with legacy API`
+        `Successfully synced ${syncedCandidateEmails.length} candidates with legacy API`
       );
     }
   }
