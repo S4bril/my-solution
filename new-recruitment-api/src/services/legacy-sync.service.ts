@@ -28,9 +28,12 @@ export class LegacySyncService {
           },
           body: JSON.stringify(candidate),
         });
-        if (response.ok) {
+        if (response.ok || response.status === 409) {
           syncedCandidateEmails.push(candidate.email);
         }
+        console.log(
+          `Synced candidate ${candidate.email} with legacy API, response status: ${response.status}`
+        );
       } catch (error) {
         console.error(`Failed to sync candidate ${candidate.email}:`, error);
       }
