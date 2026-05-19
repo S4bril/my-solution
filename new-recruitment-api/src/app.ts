@@ -1,12 +1,16 @@
-import express from "express";
-import { CandidatesController } from "./candidates.controller";
+import express from 'express';
+import { CandidatesController } from './controllers/candidates.controller';
+import { CandidateRepository } from './repositories/candidate.repository';
+import { Database } from 'sqlite';
 
-export const setupApp = async () => {
-    const app = express();
+export const setupApp = async (db: Database) => {
+  const app = express();
 
-    app.use(express.json());
+  app.use(express.json());
 
-    app.use(new CandidatesController().router);
+  const candidatesRepository = new CandidateRepository(db);
 
-    return app;
-}
+  app.use(new CandidatesController(candidatesRepository).router);
+
+  return app;
+};
