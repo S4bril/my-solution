@@ -2,6 +2,7 @@ import { Database } from 'sqlite';
 import {
   CandidateModel,
   CreateCandidateModel,
+  LegacyApiSyncCandidateModel,
 } from '../models/candidate.model';
 
 export class CandidateRepository {
@@ -72,5 +73,24 @@ export class CandidateRepository {
       await this.db.run('ROLLBACK');
       throw error;
     }
+  }
+
+  async getCandidatesForLegacySync(): Promise<LegacyApiSyncCandidateModel[]> {
+    const candidates = await this.db.all(
+      'SELECT * FROM Candidate WHERE legacy_synced = 0'
+    );
+    return candidates.map((candidate) => ({
+      firstName: candidate.name,
+      lastName: candidate.surname,
+      email: candidate.email,
+    }));
+  }
+
+  async markCandidateAsSynced(candidateIds: string[]): Promise<void> {
+    const placeholders = candidateIds.map(() => '?').join(', ');
+    await this.db.run(
+      `UPDATE Candidate SET legacy_synced = 1 WHERE email IN (${placeholders})`,
+      candidateIds
+    );
   }
 }

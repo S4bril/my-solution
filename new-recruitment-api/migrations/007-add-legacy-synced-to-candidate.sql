@@ -1,0 +1,1 @@
+ALTER TABLE Candidate ADD COLUMN legacy_synced INTEGER NOT NULL DEFAULT 0;

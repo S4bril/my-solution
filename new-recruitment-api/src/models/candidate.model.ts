@@ -12,8 +12,6 @@ export interface CandidateModel {
   legacy_synced: boolean;
 }
 
-// export interface LegacyApiSyncCandidateModel {
-
 export interface CreateCandidateModel {
   name: string;
   surname: string;
@@ -24,4 +22,10 @@ export interface CreateCandidateModel {
   recruitment_status?: 'new' | 'interviewing' | 'accepted' | 'rejected';
   consent_date: string;
   job_offer_ids: number[];
+}
+
+export interface LegacyApiSyncCandidateModel {
+  firstName: string;
+  lastName: string;
+  email: string;
 }
