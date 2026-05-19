@@ -1,6 +1,7 @@
 CREATE TABLE Candidate (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
+    surname TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
     phone TEXT,
     years_of_experience INTEGER,

@@ -32,6 +32,7 @@ export class CandidatesController {
     try {
       const {
         name,
+        surname,
         email,
         phone,
         years_of_experience,
@@ -41,10 +42,12 @@ export class CandidatesController {
         job_offer_ids,
       }: CreateCandidateModel = req.body;
 
-      if (!name || !email || !consent_date) {
+      if (!name || !surname || !email || !consent_date) {
         res
           .status(400)
-          .json({ error: 'name, email and consent_date are required' });
+          .json({
+            error: 'name, surname, email and consent_date are required',
+          });
         return;
       }
 
@@ -57,6 +60,7 @@ export class CandidatesController {
 
       const candidate = await this.candidatesRepository.create({
         name,
+        surname,
         email,
         phone,
         years_of_experience,

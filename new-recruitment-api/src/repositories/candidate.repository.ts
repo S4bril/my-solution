@@ -38,10 +38,11 @@ export class CandidateRepository {
     await this.db.run('BEGIN TRANSACTION');
     try {
       const result = await this.db.run(
-        `INSERT INTO Candidate (name, email, phone, years_of_experience, recruiter_notes, recruitment_status, consent_date)
-         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO Candidate (name, surname, email, phone, years_of_experience, recruiter_notes, recruitment_status, consent_date)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           candidateData.name,
+          candidateData.surname,
           candidateData.email,
           candidateData.phone ?? null,
           candidateData.years_of_experience ?? null,
